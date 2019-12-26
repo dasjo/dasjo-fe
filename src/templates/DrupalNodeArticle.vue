@@ -1,68 +1,22 @@
 <template>
   <Layout>
-    <h1 v-html="article.title"></h1>
+    <h1 v-html="$page.drupalNodeArticle.title"></h1>
 
-    <section class="article__tags">
+    <section v-if="$page.drupalNodeArticle.field_tags" class="article__tags">
       Tags:
-      <span v-for="tag in tags" :key="tag.name">
-        <a :href="tag.path">{{ tag.name }}</a>
+      <span
+        v-for="tag in $page.drupalNodeArticle.field_tags" 
+        :key="tag.node.name">
+          <a :href="tag.node.path">{{ tag.node.name }}</a>
       </span>
     </section>
 
-    <img :src="`${baseUrl}${imgUrl}`" height="200" :alt="imgMeta.alt" :title="imgMeta.title"/>
+    <g-image v-if="$page.drupalNodeArticle.field_image" :src="$page.drupalNodeArticle.field_image.node.image_style_uri[0].large" />
 
-    <p>{{ article.date }}</p>
-    <p v-html="article.body.processed"></p>
+    <p>{{ $page.drupalNodeArticle.date }}</p>
+    <p v-html="$page.drupalNodeArticle.body.processed"></p>
   </Layout>
 </template>
-
-<script>
-  export default {
-    computed: {
-      article() {
-        const { drupalNodeArticle } = this.$page
-
-        return drupalNodeArticle || {}
-      },
-      tags() {
-        const {
-          field_tags = []
-        } = this.article
-
-        return field_tags.map(tag => tag.node)
-      },
-      imgMeta() {
-        const {
-          field_image: {
-            meta
-          } = {}
-        } = this.article
-
-        return meta
-      },
-      imgUrl() {
-        const {
-          field_image: {
-            node: {
-              uri: {
-                url
-              } = {}
-            }
-          } = {}
-        } = this.article
-
-        return url
-      } 
-    },
-
-    data() {
-      return {
-        baseUrl: process.env.APP_BASE_URL
-      }
-    }
-  }
-</script>
-
 
 <page-query>
   query Article ($path: String!) {
@@ -83,6 +37,9 @@
           filename,
           uri {
             url
+          }
+          image_style_uri {
+            large
           }
         },
         meta {

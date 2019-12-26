@@ -6,32 +6,34 @@
 
     <h2>Articles</h2>
     <ul>
-      <li v-for="{ node } in articles" :key="node.id">
+      <li v-for="{ node } in $page.articles.edges" :key="node.id">
         <router-link :to="node.path">{{ node.title }}</router-link>
       </li>
     </ul>
+
+
+    <h2>Experiences</h2>
+    <ul>
+      <li v-for="{ node } in $page.experiences.edges" :key="node.id">
+        <router-link :to="node.path">{{ node.title }}</router-link>
+      </li>
+    </ul>
+
   </Layout>
 </template>
 
-<script>
-  export default {
-    computed: {
-      articles() {
-        const { 
-          allDrupalNodeArticle: {
-            edges
-          } = {}
-        } = this.$page
-
-        return edges || []
+<page-query>
+  query {
+    articles: allDrupalNodeArticle (perPage:100) {
+      edges {
+        node {
+          id,
+          title,
+          path
+        }
       }
     }
-  }
-</script>
-
-<page-query>
-  query Articles {
-    allDrupalNodeArticle (perPage:100) {
+    experiences: allDrupalNodeExperience (perPage:10) {
       edges {
         node {
           id,
@@ -42,3 +44,4 @@
     }
   }
 </page-query>
+
