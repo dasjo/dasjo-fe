@@ -16,7 +16,7 @@ module.exports = {
     {
       use: '@gridsome/source-drupal',
       options: {
-        baseUrl: 'http://dasjo8.docksal/', // use dotenv with .env or replace value with your Drupal url
+        baseUrl: 'http://dasjo-be.docksal/', // use dotenv with .env or replace value with your Drupal url
         exclude: [ ...defaultExcludes /* include your own excludes here */],
         routes: {
           'node--article': '/articles/:title',
