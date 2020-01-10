@@ -1,3 +1,24 @@
+# dasjo-fe
+
+Requirements
+
+* yarn https://yarnpkg.com/en/docs/install
+* gridsome https://gridsome.org/docs/#prerequisites
+
+Setup
+
+* Make sure https://github.com/dasjo/dasjo-be is running and available on http://dasjo-be.docksal/jsonapi
+* git clone git@github.com:dasjo/dasjo-fe.git
+* cd dasjo-fe
+* 
+
+Usage
+
+* gridsome develop
+* gridsome build
+
+
+
 # Drupal starter for Gridsome
 
 ## Install
